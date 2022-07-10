@@ -1,0 +1,144 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="core.lua"/>
+
+	<Button name="LootAlertButtonTemplate" parent="UIParent" toplevel="true" frameLevel="120" frameStrata="FULLSCREEN_DIALOG" hidden="true" virtual="true">
+		<Size x="276" y="96"/>
+		<Animations>
+			<AnimationGroup parentKey="animIn">
+				<Alpha change="0" duration="0" order="1"/>
+				<Alpha change="1" duration="0.2" order="2"/>
+				<Scripts>
+					<OnFinished>
+						self:GetParent().waitAndAnimOut:Play()
+					</OnFinished>
+				</Scripts>
+			</AnimationGroup>
+			<AnimationGroup parentKey="waitAndAnimOut">
+				<Alpha startDelay="4.05" change="-1" duration="1.5" parentKey="animOut">
+					<Scripts>
+						<OnFinished>
+							self:GetParent():GetParent():Hide()
+						</OnFinished>
+					</Scripts>
+				</Alpha>
+			</AnimationGroup>
+		</Animations>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Background" file="Interface\AddOns\pretty_lootalert\assets\loottoast">
+					<Size x="276" y="96"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.28222656" right="0.55175781" top="0.57812500" bottom="0.95312500"/>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentIcon" parentKey="Icon" file="Interface\AddOns\pretty_lootalert\assets\unknow_treasure">
+					<Size x="52" y="52"/>
+					<Anchors>
+						<Anchor point="LEFT" x="23" y="-2"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentCount" parentKey="Count" inherits="NumberFontNormal" justifyH="RIGHT" hidden="false">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeTo="$parentIcon" x="-2" y="3"/>
+					</Anchors>
+				</FontString>
+				<Texture parentKey="IconBorder" atlas="loottoast-itemborder-green" file="Interface\AddOns\pretty_lootalert\assets\LootToastAtlas">
+					<Size x="60" y="60"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentIcon" relativePoint="CENTER" x="0" y="0"/>
+					</Anchors>
+					<TexCoords left="0.614258" right="0.670898" top="0.707031" bottom="0.933594"/>
+				</Texture>
+				<FontString parentKey="Label" inherits="GameFontNormal" justifyH="LEFT" text="YOU_RECEIVED">
+					<Size x="167" y="16"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentIcon" relativePoint="TOPRIGHT" x="7" y="5"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="ItemName" inherits="GameFontNormalMed3" justifyH="LEFT" justifyV="MIDDLE" text="ItemName">
+					<Size x="167" y="33"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentIcon" relativePoint="TOPRIGHT" x="10" y="-16"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture atlas="loottoast-glow" file="Interface\AddOns\pretty_lootalert\assets\LootToastAtlas" alphaMode="ADD" hidden="true" parentKey="glow">
+					<Size x="286" y="109"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0"/>
+					</Anchors>
+					<TexCoords left="0.000976562" right="0.280273" top="0.00390625" bottom="0.429688"/>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha change="-1" duration="0" order="1"/>
+							<Alpha change="1" duration="0.2" order="2"/>
+							<Alpha change="-1" duration="0.5" order="3"/>
+							<Scripts>
+								<OnPlay>
+									self:GetParent():Show()
+								</OnPlay>
+								<OnFinished>
+									self:GetParent():Hide()
+								</OnFinished>
+							</Scripts>
+						</AnimationGroup>
+					</Animations>
+				</Texture>
+				<Texture file="Interface\AddOns\pretty_lootalert\assets\loottoast" alphaMode="ADD" hidden="true" parentKey="shine">
+					<Size x="171" y="75"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="-10" y="12"/>
+					</Anchors>
+					<TexCoords left="0.56347656" right="0.73046875" top="0.57421875" bottom="0.86718750"/>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha change="-1" duration="0" order="1"/>
+							<Alpha change="1" duration="0.1" order="2"/>
+							<Translation offsetX="200" offsetY="0" duration="0.71" order="3"/>
+							<Alpha change="-1" duration="0.25" startDelay="0.175" order="3"/>
+							<Scripts>
+								<OnPlay>
+									self:GetParent():Show()
+								</OnPlay>
+								<OnFinished>
+									self:GetParent():Hide()
+								</OnFinished>
+							</Scripts>
+						</AnimationGroup>
+					</Animations>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad function="LootAlertButtonTemplate_OnLoad"/>
+			<OnShow function="LootAlertButtonTemplate_OnShow"/>
+			<OnHide function="LootAlertButtonTemplate_OnHide"/>
+			<OnClick function="LootAlertButtonTemplate_OnClick"/>
+			<OnEnter function="LootAlertButtonTemplate_OnEnter"/>
+			<OnLeave function="GameTooltip_Hide"/>
+		</Scripts>
+	</Button>
+
+	<Frame name="LootAlertFrame" parent="UIParent" mixin="LootAlertFrame" hidden="false">
+		<Size x="10" y="10"/>
+		<Anchors>
+			<Anchor point="BOTTOM" x="0" y="128"/>
+		</Anchors>
+		<Scripts>
+			<OnLoad function="LootAlertFrame_OnLoad"/>
+			<OnEvent function="LootAlertFrame_OnEvent"/>
+			<OnUpdate function="LootAlertFrame_OnUpdate"/>
+		</Scripts>
+	</Frame>
+
+	<Button name="LootAlertButton1" inherits="LootAlertButtonTemplate" id="1"/>
+	<Button name="LootAlertButton2" inherits="LootAlertButtonTemplate" id="2"/>
+	<Button name="LootAlertButton3" inherits="LootAlertButtonTemplate" id="3"/>
+	<Button name="LootAlertButton4" inherits="LootAlertButtonTemplate" id="4"/>
+</Ui>
