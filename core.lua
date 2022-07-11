@@ -118,8 +118,9 @@ end
 
 function LootAlertFrame_OnEvent(self, event, ...)
 	if event == 'CHAT_MSG_LOOT' then
-		-- local itemEntry, count = string.match(arg1, gsub(LOOT_ITEM, '%%s', '(.+)'))
-		local itemEntry, count = strmatch(arg1, '|Hitem:(%d+).*x(%d+)')
+		local itemEntry = string.match(arg1, gsub(LOOT_ITEM, '%%s', '(.+)'))
+		local count = string.match(arg1, '.*x(%d+)')
+		-- local itemEntry, count = strmatch(arg1, '|Hitem:(%d+).*x(%d+)')
 		local player
 
 		if not itemEntry and not player then
@@ -133,7 +134,8 @@ function LootAlertFrame_OnEvent(self, event, ...)
 				LootAlertFrameMixIn:AddAlert(name, link, quality, texture, count, false)
 			end
 		end
-	elseif event == 'CHAT_MSG_COMBAT_HONOR_GAIN'
+	end
+	if event == 'CHAT_MSG_COMBAT_HONOR_GAIN'
 	   or event == 'CHAT_MSG_BG_SYSTEM_NEUTRAL' then
 		RequestBattlefieldScoreData()
 		local numScores = GetNumBattlefieldScores()
@@ -145,9 +147,7 @@ function LootAlertFrame_OnEvent(self, event, ...)
 		for i = 1, numScores do
 			local name, _, _, _, honorGained = GetBattlefieldScore(i)
 			local honorCount = format('%d', honorGained)
-			-- print('for')
 			if name and name == isPlayer then
-				-- print('link')
 				link 		= 'item:43308'
 				entry 		= HONOR_POINTS
 				count 		= honorCount
