@@ -120,7 +120,6 @@ function LootAlertFrame_OnEvent(self, event, ...)
 	if event == 'CHAT_MSG_LOOT' then
 		local itemEntry = string.match(arg1, gsub(LOOT_ITEM, '%%s', '(.+)'))
 		local count = string.match(arg1, '.*x(%d+)')
-		-- local itemEntry, count = strmatch(arg1, '|Hitem:(%d+).*x(%d+)')
 		local player
 
 		if not itemEntry and not player then
