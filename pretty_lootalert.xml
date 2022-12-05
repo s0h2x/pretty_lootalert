@@ -1,4 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="config.lua"/>
+	<Script file="utils.lua"/>
+	<Script file="locale.lua"/>
 	<Script file="core.lua"/>
 
 	<Button name="LootAlertButtonTemplate" parent="UIParent" toplevel="true" frameLevel="120" frameStrata="FULLSCREEN_DIALOG" hidden="true" virtual="true">
@@ -25,12 +28,66 @@
 		</Animations>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture parentKey="Background" file="Interface\AddOns\pretty_lootalert\assets\loottoast">
+				<Texture parentKey="Background" file="Interface\AddOns\pretty_lootalert\assets\loottoast" hidden="false">
 					<Size x="276" y="96"/>
 					<Anchors>
 						<Anchor point="CENTER"/>
 					</Anchors>
+					<!-- GOLD <TexCoords left="0.000976562" right="0.270508" top="0.414062" bottom="0.601562"/> -->
+					<!-- nzoth 0.273438, 0.543945, 0.21875, 0.410156 -->
+					<!-- quest rew 0.545898, 0.81543, 0.21875, 0.40625 -->
 					<TexCoords left="0.28222656" right="0.55175781" top="0.57812500" bottom="0.95312500"/>
+				</Texture>
+				<Texture parentKey="HeroicBackground" file="Interface\AddOns\pretty_lootalert\assets\LootToastAtlas" hidden="true">
+					<Size x="276" y="96"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.000976562" right="0.270508" top="0.414062" bottom="0.601562"/>
+				</Texture>
+				<Texture parentKey="PvPBackground" file="Interface\AddOns\pretty_lootalert\assets\PvPRatedLootToast" hidden="true">
+					<Size x="277" y="113"/>
+					<Anchors>
+						<Anchor point="CENTER" x="-1" y="2"/>
+					</Anchors>
+				</Texture>
+				<!--PerPlayerLoot-Gold-->
+				<Texture parentKey="MoneyBackground" file="Interface\AddOns\pretty_lootalert\assets\loottoast" hidden="true">
+					<Size x="249" y="71"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.56347656" right="0.80664063" top="0.28906250" bottom="0.56640625"/>
+				</Texture>
+				<Texture parentKey="MountToastBackground" file="Interface\AddOns\pretty_lootalert\assets\mounttoast" hidden="true">
+					<Size x="276" y="109"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.001953" right="0.541016" top="0.007813" bottom="0.859375"/>
+				</Texture>
+				<Texture parentKey="PetToastBackground" file="Interface\AddOns\pretty_lootalert\assets\pettoast" hidden="true">
+					<Size x="276" y="98"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.001953" right="0.541016" top="0.007813" bottom="0.773438"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="LegendaryBackground" file="Interface\AddOns\pretty_lootalert\assets\LegendaryToast" hidden="true">
+					<Size x="302" y="119"/>
+					<Anchors>
+						<Anchor point="CENTER" x="-12" y="-4"/>
+					</Anchors>
+					<TexCoords left="0.396484" right="0.986328" top="0.00195312" bottom="0.234375"/>
+				</Texture>
+				<Texture parentKey="LessBackground" file="Interface\AddOns\pretty_lootalert\assets\LootToastAtlas" hidden="true">
+					<Size x="276" y="80"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.000976562" right="0.270508" top="0.796875" bottom="0.953125"/>
 				</Texture>
 			</Layer>
 			<Layer level="BORDER">
@@ -40,6 +97,53 @@
 						<Anchor point="LEFT" x="23" y="-2"/>
 					</Anchors>
 				</Texture>
+				<!-- Less Toast -->
+				<Texture name="$parentLessIcon" parentKey="LessIcon" file="Interface\AddOns\pretty_lootalert\assets\unknow_treasure">
+					<Size x="44" y="44"/>
+					<Anchors>
+						<Anchor point="LEFT" x="23" y="0"/>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentRollWonTitle" parentKey="RollWonTitle" hidden="true">
+					<Size x="21" y="21"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentIcon" relativePoint="TOPRIGHT" x="158" y="5"/>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentMoneyIcon" parentKey="MoneyIcon" file="Interface\Icons\INV_Misc_Coin_02" hidden="true">
+					<Size x="38" y="38"/>
+					<Anchors>
+						<Anchor point="LEFT" x="30" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<!-- NewRecipeLearned Icon -->
+			<Layer level="BACKGROUND" textureSubLevel="-6">
+				<Texture name="$parentRecipeIcon" parentKey="RecipeIcon" file="Interface\Icons\INV_Scroll_04" hidden="true">
+					<Size x="62" y="62"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" x="-2" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER" textureSubLevel="-6">
+				<Texture parentKey="RecipeBackground" file="Interface\AddOns\pretty_lootalert\assets\recipetoast" hidden="true">
+					<Size x="312" y="89"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.001953125" right="0.611328125" top="0.0078125" bottom="0.703125"/>
+				</Texture>
+			</Layer>
+			<!--ItemBorder-Gold-->
+			<Layer level="ARTWORK" textureSubLevel="2">
+				<Texture name="$parentMoneyIconBorder" parentKey="MoneyIconBorder" file="Interface\AddOns\pretty_lootalert\assets\loottoast" hidden="true">
+					<Size x="45" y="45"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentMoneyIcon" relativePoint="CENTER" x="0" y="0"/>
+					</Anchors>
+					<TexCoords left="0.73242188" right="0.78906250" top="0.57421875" bottom="0.80078125"/>
+				</Texture>
 			</Layer>
 			<Layer level="ARTWORK">
 				<FontString name="$parentCount" parentKey="Count" inherits="NumberFontNormal" justifyH="RIGHT" hidden="false">
@@ -48,13 +152,13 @@
 					</Anchors>
 				</FontString>
 				<Texture parentKey="IconBorder" atlas="loottoast-itemborder-green" file="Interface\AddOns\pretty_lootalert\assets\LootToastAtlas">
-					<Size x="60" y="60"/>
+					<Size x="58" y="58"/>
 					<Anchors>
 						<Anchor point="CENTER" relativeTo="$parentIcon" relativePoint="CENTER" x="0" y="0"/>
 					</Anchors>
-					<TexCoords left="0.614258" right="0.670898" top="0.707031" bottom="0.933594"/>
+					<TexCoords left="0.34082" right="0.397461" top="0.53125" bottom="0.644531"/>
 				</Texture>
-				<FontString parentKey="Label" inherits="GameFontNormal" justifyH="LEFT" text="YOU_RECEIVED">
+				<FontString parentKey="Label" inherits="GameFontNormal" justifyH="LEFT" text="YOU_RECEIVED_LABEL">
 					<Size x="167" y="16"/>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentIcon" relativePoint="TOPRIGHT" x="7" y="5"/>
@@ -66,6 +170,84 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentIcon" relativePoint="TOPRIGHT" x="10" y="-16"/>
 					</Anchors>
 				</FontString>
+				<FontString parentKey="RollWon" inherits="GameFontGreen" justifyH="LEFT" text="" hidden="true">
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativeTo="$parentRollWonTitle" relativePoint="TOPLEFT" x="-4" y="-2"/>
+					</Anchors>
+				</FontString>
+				<!-- Gold -->
+				<FontString parentKey="MoneyLabel" inherits="GameFontNormal" justifyH="LEFT" text="YOU_RECEIVED_LABEL" hidden="true">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentMoneyIconBorder" relativePoint="TOPRIGHT" x="7" y="-1"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="Amount" inherits="GameFontHighlightLarge" justifyH="LEFT" hidden="true">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeTo="$parentMoneyIconBorder" relativePoint="BOTTOMRIGHT" x="10" y="7"/>
+					</Anchors>
+				</FontString>
+				<!-- Less Toast -->
+				<FontString parentKey="LessItemName" inherits="GameFontNormalMed3" justifyH="LEFT" justifyV="MIDDLE" text="ItemName">
+					<Size x="167" y="33"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentLessIcon" relativePoint="TOPRIGHT" x="14" y="-4"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<!-- NewRecipeLearned String -->
+				<FontString parentKey="RecipeTitle" inherits="GameFontHighlight" hidden="true">
+					<Anchors>
+						<Anchor point="TOP" x="31" y="-19"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="RecipeName" inherits="GameFontNormal" justifyH="CENTER" justifyV="MIDDLE" hidden="true">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="98" y="-34"/>
+						<Anchor point="BOTTOMRIGHT" x="-32" y="17"/>
+					</Anchors>
+				</FontString>
+				<Texture parentKey="legendaryGlow" alpha="0" alphaMode="ADD" atlas="LegendaryToast-background" file="Interface\AddOns\pretty_lootalert\assets\LegendaryToast">
+					<Size x="302" y="119"/>
+					<Anchors>
+						<Anchor point="CENTER" x="-12" y="-4"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha change="1" duration="0.5" order="1"/>
+							<Alpha change="-1" duration="0.5" order="2"/>
+							<Scripts>
+								<OnPlay>
+									self:GetParent():Show()
+								</OnPlay>
+								<OnFinished>
+									self:GetParent():Hide()
+								</OnFinished>
+							</Scripts>
+						</AnimationGroup>
+					</Animations>
+					<TexCoords left="0.396484" right="0.986328" top="0.00195312" bottom="0.234375"/>
+				</Texture>
+				<Texture parentKey="legendaryShine" alpha="0" alphaMode="ADD" atlas="LegendaryToast-background" file="Interface\AddOns\pretty_lootalert\assets\LegendaryToast">
+					<Size x="302" y="119"/>
+					<Anchors>
+						<Anchor point="CENTER" x="-12" y="-4"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha change="1" duration="0.5" order="1"/>
+							<Alpha change="-1" duration="0.5" order="2"/>
+							<Scripts>
+								<OnPlay>
+									self:GetParent():Show()
+								</OnPlay>
+								<OnFinished>
+									self:GetParent():Hide()
+								</OnFinished>
+							</Scripts>
+						</AnimationGroup>
+					</Animations>
+					<TexCoords left="0.396484" right="0.986328" top="0.00195312" bottom="0.234375"/>
+				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
 				<Texture atlas="loottoast-glow" file="Interface\AddOns\pretty_lootalert\assets\LootToastAtlas" alphaMode="ADD" hidden="true" parentKey="glow">
@@ -73,7 +255,7 @@
 					<Anchors>
 						<Anchor point="CENTER" x="0" y="0"/>
 					</Anchors>
-					<TexCoords left="0.000976562" right="0.280273" top="0.00390625" bottom="0.429688"/>
+					<TexCoords left="0.000976562" right="0.280273" top="0.00195312" bottom="0.214844"/>
 					<Animations>
 						<AnimationGroup parentKey="animIn">
 							<Alpha change="-1" duration="0" order="1"/>
@@ -90,12 +272,12 @@
 						</AnimationGroup>
 					</Animations>
 				</Texture>
-				<Texture file="Interface\AddOns\pretty_lootalert\assets\loottoast" alphaMode="ADD" hidden="true" parentKey="shine">
+				<Texture file="Interface\AddOns\pretty_lootalert\assets\LootToastAtlas" alphaMode="ADD" hidden="true" parentKey="shine">
 					<Size x="171" y="75"/>
 					<Anchors>
 						<Anchor point="BOTTOMLEFT" x="-10" y="12"/>
 					</Anchors>
-					<TexCoords left="0.56347656" right="0.73046875" top="0.57421875" bottom="0.86718750"/>
+					<TexCoords left="0.817383" right="0.984375" top="0.21875" bottom="0.365234"/>
 					<Animations>
 						<AnimationGroup parentKey="animIn">
 							<Alpha change="-1" duration="0" order="1"/>
@@ -112,6 +294,50 @@
 							</Scripts>
 						</AnimationGroup>
 					</Animations>
+				</Texture>
+				<!-- NewRecipeLearned Toast -->
+				<Texture file="Interface\AchievementFrame\UI-Achievement-Alert-Glow" alphaMode="ADD" hidden="true" parentKey="recipeGlow">
+					<Size x="400" y="171"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha change="1" duration="0.2" order="1"/>
+							<Alpha change="-1" duration="0.5" order="2"/>
+							<Scripts>
+								<OnPlay>
+									self:GetParent():Show()
+								</OnPlay>
+								<OnFinished>
+									self:GetParent():Hide()
+								</OnFinished>
+							</Scripts>
+						</AnimationGroup>
+					</Animations>
+					<TexCoords left="0" right="0.78125" top="0" bottom="0.66796875"/>
+				</Texture>
+				<Texture file="Interface\AchievementFrame\UI-Achievement-Alert-Glow" alphaMode="ADD" hidden="true" parentKey="recipeShine">
+					<Size x="67" y="82"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="0" y="3"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha change="-1" duration="0.2" order="1"/>
+							<Translation offsetX="240" offsetY="0" duration="0.65" order="2"/>
+							<Alpha startDelay="0.25" change="-1" duration="0.45" order="2"/>
+							<Scripts>
+								<OnPlay>
+									self:GetParent():Show()
+								</OnPlay>
+								<OnFinished>
+									self:GetParent():Hide()
+								</OnFinished>
+							</Scripts>
+						</AnimationGroup>
+					</Animations>
+					<TexCoords left="0.78125" right="0.912109375" top="0" bottom="0.28125"/>
 				</Texture>
 			</Layer>
 		</Layers>
@@ -141,4 +367,9 @@
 	<Button name="LootAlertButton2" inherits="LootAlertButtonTemplate" id="2"/>
 	<Button name="LootAlertButton3" inherits="LootAlertButtonTemplate" id="3"/>
 	<Button name="LootAlertButton4" inherits="LootAlertButtonTemplate" id="4"/>
+
+	<Button name="LootAlertButton5" inherits="LootAlertButtonTemplate" id="5"/>
+	<Button name="LootAlertButton6" inherits="LootAlertButtonTemplate" id="6"/>
+	<Button name="LootAlertButton7" inherits="LootAlertButtonTemplate" id="7"/>
+	<Button name="LootAlertButton8" inherits="LootAlertButtonTemplate" id="8"/>
 </Ui>

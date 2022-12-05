@@ -1,8 +1,8 @@
 ## Interface: 30300
 ## Title: |cff00ffff*|r |cfffff0f5pretty_lootalert|r
-## Notes: |cff00ffff Loot alert|r modded by |cfffff0f5s0high|r
-## Version: 1.0b
-## Author: s0h2x
+## Notes: |cffcaf7faLoot toast addon from pretty stuff|r
+## Notes-ruRU: |cffcaf7faОповещение о луте из прекрасного стаффа|r
+## Version: 2.0
+## Author: s0high
 
-core.lua
 pretty_lootalert.xml
