@@ -52,6 +52,7 @@ local GetBattlefieldWinner = GetBattlefieldWinner;
 local GetMoneyString = GetMoneyString;
 local GameTooltip = GameTooltip;
 local playerFaction = UnitFactionGroup("player");
+local playerWinner = PLAYER_FACTION_GROUP[playerFaction];
 local playerName = UnitName("player");
 local GetAmountBattlefieldBonus = private.GetAmountBattlefieldBonus;
 
@@ -159,7 +160,7 @@ LootAlertFrameMixIn.alertButton = {};
 function LootAlertFrameMixIn:AddAlert(name, link, quality, texture, count, ignore, label, toast, rollType, rollLink, tip, money, subType)
 	if not ignore then
 		if UnitLevel("player") < 80 then
-			if quality < low_level then
+			if quality < quality_low then
 				return;
 			end
 		else
@@ -415,7 +416,7 @@ function LootAlertFrame_OnEvent(self, event, ...)
 		if link then
 			LootAlertFrameMixIn:AddAlert(entry, link, quality, texture, count, true, label, toast, false, false, tip);
 		end
-		if not hasWon then
+		if not hasWon and GetBattlefieldWinner() == playerWinner then
 			link	  	= "item:43307";
 			entry	  	= ARENA_POINTS;
 			count	  	= winArenaAmount;
