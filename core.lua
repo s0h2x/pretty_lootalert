@@ -390,7 +390,7 @@ function LootAlertFrame_OnEvent(self, event, ...)
 
 	-- [[ HonorAwardedAlertFrameTemplate ]] --
 	if event == "UPDATE_BATTLEFIELD_STATUS" and honor_award then
-		if (not GetBattlefieldWinner() or BATTLEFIELD_SHUTDOWN_TIMER <= 0) then return; end
+		if (not GetBattlefieldWinner() or BATTLEFIELD_SHUTDOWN_TIMER <= 0 or IsActiveBattlefieldArena()) then return; end
 		local link, entry, count, texture, quality, label, toast, tip;
 		local honorIcon = assets.."PVPCurrency-Honor-"..playerFaction;
 		local bonusIcon = assets.."achievement_legionpvptier4";
